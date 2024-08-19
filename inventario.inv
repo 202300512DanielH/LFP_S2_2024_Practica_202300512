@@ -8,12 +8,12 @@ crear_equipo Proyectores;15;500.00;BodegaB
 crear_equipo Pizarras;25;80.00;BodegaC
 crear_equipo Marcadores;300;1.25;BodegaA
 crear_equipo Archivadores;100;15.50;BodegaA
-crear_equipo Teléfonos;40;75.00;BodegaB
+crear_equipo Telefonos;40;75.00;BodegaB
 crear_equipo Mesas;60;150.00;BodegaC
 crear_equipo Teclados;60;25.00;BodegaB
 crear_equipo Ratones;60;15.00;BodegaB
 crear_equipo Monitores;55;200.00;BodegaB
-crear_equipo Lámparas;80;30.00;BodegaC
+crear_equipo Lamparas;80;30.00;BodegaC
 crear_equipo Grapadoras;150;5.00;BodegaA
 crear_equipo Perforadoras;100;7.50;BodegaA
 crear_equipo Carpetas;500;1.00;BodegaA
@@ -24,17 +24,17 @@ crear_equipo Clips;1000;0.05;BodegaA
 crear_equipo Pinzas;200;1.50;BodegaA
 crear_equipo Calculadoras;50;10.00;BodegaA
 crear_equipo Papeleras;100;8.00;BodegaC
-crear_equipo Estanterías;30;120.00;BodegaC
+crear_equipo Estanterias;30;120.00;BodegaC
 crear_equipo Corchos;40;15.00;BodegaC
 crear_equipo Punteros;20;12.00;BodegaB
 crear_equipo Altavoces;30;50.00;BodegaB
-crear_equipo Micrófonos;15;75.00;BodegaB
-crear_equipo Cámaras;10;150.00;BodegaB
+crear_equipo Microfonos;15;75.00;BodegaB
+crear_equipo Camaras;10;150.00;BodegaB
 crear_equipo Tabletas;25;200.00;BodegaB
 crear_equipo Auriculares;50;30.00;BodegaB
 crear_equipo Cables;200;5.00;BodegaB
 crear_equipo Adaptadores;100;10.00;BodegaB
-crear_equipo Baterías;300;2.50;BodegaA
+crear_equipo Baterias;300;2.50;BodegaA
 crear_equipo Cargadores;75;15.00;BodegaB
 crear_equipo Reposapiés;50;20.00;BodegaC
 crear_equipo Soportes;40;25.00;BodegaC
@@ -48,12 +48,12 @@ crear_equipo Compases;50;3.50;BodegaA
 crear_equipo Gomas;300;0.50;BodegaA
 crear_equipo Sacapuntas;200;1.00;BodegaA
 crear_equipo Correctores;150;2.00;BodegaA
-crear_equipo Porta-lápices;100;4.00;BodegaA
+crear_equipo Porta-lapices;100;4.00;BodegaA
 crear_equipo Separadores;300;1.50;BodegaA
 crear_equipo Post-its;250;2.25;BodegaA
 crear_equipo Cajas;100;5.00;BodegaC
 crear_equipo Cinta adhesiva;200;1.25;BodegaA
-crear_equipo Pizarras magnéticas;20;40.00;BodegaC
+crear_equipo Pizarras magneticas;20;40.00;BodegaC
 crear_equipo Imanes;300;0.25;BodegaA
 crear_equipo Lupas;30;7.50;BodegaA
 crear_equipo Destructoras;10;100.00;BodegaB
@@ -64,7 +64,7 @@ crear_equipo Plantas artificiales;30;20.00;BodegaC
 crear_equipo Cuadros;25;30.00;BodegaC
 crear_equipo Alfombras;15;50.00;BodegaC
 crear_equipo Percheros;20;25.00;BodegaC
-crear_equipo Paragüeros;15;15.00;BodegaC
+crear_equipo Paragueros;15;15.00;BodegaC
 crear_equipo Tapetes;50;8.00;BodegaC
 crear_equipo Dispensadores de agua;10;80.00;BodegaC
 crear_equipo Cafeteras;5;60.00;BodegaC
@@ -72,7 +72,7 @@ crear_equipo Tazas;100;3.00;BodegaA
 crear_equipo Cucharas;200;0.50;BodegaA
 crear_equipo Servilletas;1000;0.05;BodegaA
 crear_equipo Vasos;200;1.00;BodegaA
-crear_equipo Jabón líquido;50;4.00;BodegaA
+crear_equipo Jabon liquido;50;4.00;BodegaA
 crear_equipo Toallas de papel;100;2.50;BodegaA
 crear_equipo Desinfectante;75;3.50;BodegaA
 crear_equipo Escobas;20;5.00;BodegaC
@@ -80,11 +80,11 @@ crear_equipo Trapeadores;20;6.00;BodegaC
 crear_equipo Cubos;15;8.00;BodegaC
 crear_equipo Guantes;100;1.50;BodegaA
 crear_equipo Mascarillas;500;0.20;BodegaA
-crear_equipo Gel hidroalcohólico;100;3.00;BodegaA
-crear_equipo Termómetros;10;15.00;BodegaB
+crear_equipo Gel hidroalcoholico;100;3.00;BodegaA
+crear_equipo Termometros;10;15.00;BodegaB
 crear_equipo Botiquines;5;30.00;BodegaB
 crear_equipo Extintores;10;50.00;BodegaC
-crear_equipo Señales de seguridad;30;10.00;BodegaC
+crear_equipo Senales de seguridad;30;10.00;BodegaC
 crear_equipo Candados;50;5.00;BodegaA
 crear_equipo Llaves;100;2.00;BodegaA
 crear_equipo Tarjetas de acceso;200;1.50;BodegaB
@@ -93,6 +93,6 @@ crear_equipo Chalecos reflectantes;50;10.00;BodegaC
 crear_equipo Cascos;25;20.00;BodegaC
 crear_equipo Botas de seguridad;50;40.00;BodegaC
 crear_equipo Gafas protectoras;75;8.00;BodegaA
-crear_equipo Tapones para oídos;200;0.50;BodegaA
+crear_equipo Tapones para oidos;200;0.50;BodegaA
 crear_equipo Linternas;30;12.00;BodegaB
 crear_equipo Pilas;300;1.00;BodegaA

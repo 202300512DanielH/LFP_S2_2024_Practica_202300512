@@ -1,5 +1,9 @@
 MODULE InventarioMod
     IMPLICIT NONE
+    INTEGER :: numEquipos = 0
+    CHARACTER(LEN=15), ALLOCATABLE :: nombres(:), ubicaciones(:)
+    INTEGER, ALLOCATABLE :: cantidades(:)
+    REAL, ALLOCATABLE :: precios(:)
     CONTAINS
 
     SUBROUTINE RedimensionarArrays(nombres, ubicaciones, cantidades, precios, newSize)
@@ -57,6 +61,33 @@ MODULE InventarioMod
         ubicacion = tmp_linea
     END SUBROUTINE ExtraerTokens
 
+    SUBROUTINE ExtraerTokensMov(linea, accion, nombre, cantidad, ubicacion)
+        IMPLICIT NONE
+        CHARACTER(LEN=100), INTENT(IN) :: linea
+        CHARACTER(LEN=20), INTENT(OUT) :: accion, nombre, ubicacion
+        INTEGER, INTENT(OUT) :: cantidad
+        CHARACTER(LEN=100) :: tmp_linea
+        INTEGER :: pos1, pos2
+
+        ! Extraer acción
+        pos1 = INDEX(linea, ' ')
+        accion = linea(1:pos1-1)
+        tmp_linea = ADJUSTL(linea(pos1+1:))
+
+        ! Extraer nombre
+        pos1 = INDEX(tmp_linea, ';')
+        nombre = tmp_linea(1:pos1-1)
+        tmp_linea = tmp_linea(pos1+1:)
+
+        ! Extraer cantidad
+        pos1 = INDEX(tmp_linea, ';')
+        READ(tmp_linea(1:pos1-1), *) cantidad
+        tmp_linea = tmp_linea(pos1+1:)
+
+        ! Extraer ubicación
+        ubicacion = tmp_linea
+    END SUBROUTINE ExtraerTokensMov
+
 END MODULE InventarioMod
 
 PROGRAM Inventario
@@ -103,10 +134,7 @@ SUBROUTINE CargarInventario()
     CHARACTER(LEN=20) :: nombre, ubicacion
     INTEGER :: cantidad, ios
     REAL :: precio_unitario
-    INTEGER :: i, numEquipos, newSize
-    CHARACTER(LEN=15), ALLOCATABLE :: nombres(:), ubicaciones(:)
-    INTEGER, ALLOCATABLE :: cantidades(:)
-    REAL, ALLOCATABLE :: precios(:)
+    INTEGER :: i, newSize
     INTEGER :: unidad_archivo
 
     numEquipos = 0
@@ -158,11 +186,91 @@ SUBROUTINE CargarInventario()
 END SUBROUTINE CargarInventario
 
 SUBROUTINE CargarMovimientos()
-    ! Código para cargar movimientos de inventario
-    PRINT *, 'Cargando movimientos de inventario...'
+    USE InventarioMod
+    IMPLICIT NONE
+    CHARACTER(LEN=100) :: linea
+    CHARACTER(LEN=20) :: accion, nombre, ubicacion
+    INTEGER :: cantidad, ios
+    INTEGER :: i, encontrado
+    INTEGER :: unidad_archivo
+
+    unidad_archivo = 20
+
+    ! Abre el archivo .mov
+    OPEN(unit=unidad_archivo, file='movimientos.mov', status='old', action='read', iostat=ios)
+    IF (ios /= 0) THEN
+        PRINT *, 'Error al abrir el archivo movimientos.mov'
+        RETURN
+    END IF
+
+    ! Leer cada línea del archivo
+    DO
+        READ(unidad_archivo, '(A)', IOSTAT=ios) linea
+        IF (ios /= 0) EXIT
+
+        ! Extraer los tokens de la línea
+        CALL ExtraerTokensMov(linea, accion, nombre, cantidad, ubicacion)
+
+        ! Procesar la acción
+        IF (accion == 'agregar_stock') THEN
+            encontrado = 0
+            DO i = 1, numEquipos
+                IF (TRIM(nombres(i)) == TRIM(nombre) .AND. TRIM(ubicaciones(i)) == TRIM(ubicacion)) THEN
+                    cantidades(i) = cantidades(i) + cantidad
+                    encontrado = 1
+                    EXIT
+                END IF
+            END DO
+            IF (encontrado == 0) THEN
+                PRINT *, 'Error: El equipo ', TRIM(nombre), ' no existe en la ubicacion ', TRIM(ubicacion)
+            END IF
+        ELSE IF (accion == 'eliminar_equipo') THEN
+            encontrado = 0
+            DO i = 1, numEquipos
+                IF (TRIM(nombres(i)) == TRIM(nombre) .AND. TRIM(ubicaciones(i)) == TRIM(ubicacion)) THEN
+                    IF (cantidades(i) >= cantidad) THEN
+                        cantidades(i) = cantidades(i) - cantidad
+                    ELSE
+                        PRINT *, 'Error: No hay suficiente cantidad de ', TRIM(nombre), ' en la ubicacion ', TRIM(ubicacion)
+                    END IF
+                    encontrado = 1
+                    EXIT
+                END IF
+            END DO
+            IF (encontrado == 0) THEN
+                PRINT *, 'Error: El equipo ', TRIM(nombre), ' no existe en la ubicacion ', TRIM(ubicacion)
+            END IF
+        ELSE
+            PRINT *, 'Error: Acción desconocida ', TRIM(accion)
+        END IF
+    END DO
+
+    ! Cierra el archivo
+    CLOSE(unidad_archivo)
+
+    PRINT *, 'Movimientos de inventario cargados con exito.'
 END SUBROUTINE CargarMovimientos
 
 SUBROUTINE CrearInforme()
-    ! Código para crear informe de inventario
-    PRINT *, 'Creando informe de inventario...'
+    USE InventarioMod
+    IMPLICIT NONE
+    INTEGER :: i, unit
+    REAL :: valor_total
+
+    ! Abrir archivo para escribir
+    OPEN(UNIT=unit, FILE='Reporte.txt', STATUS='REPLACE', ACTION='WRITE')
+
+    ! Escribir encabezados
+    WRITE(unit, '(A20, A10, A15, A15, A20)') 'Equipo', 'Cantidad', 'Precio U.', 'Valor Total', 'Ubicación'
+
+    ! Escribir datos del inventario
+    DO i = 1, numEquipos
+        valor_total = cantidades(i) * precios(i)
+        WRITE(unit, '(A20, I10, F15.2, F15.2, A20)') TRIM(nombres(i)), cantidades(i), precios(i), valor_total, TRIM(ubicaciones(i))
+    END DO
+
+    ! Cerrar archivo
+    CLOSE(unit)
+
+    PRINT *, 'Informe de inventario creado en archivo.txt'
 END SUBROUTINE CrearInforme

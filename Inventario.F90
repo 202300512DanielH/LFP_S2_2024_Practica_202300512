@@ -4,6 +4,7 @@ MODULE InventarioMod
     CHARACTER(LEN=15), ALLOCATABLE :: nombres(:), ubicaciones(:)
     INTEGER, ALLOCATABLE :: cantidades(:)
     REAL, ALLOCATABLE :: precios(:)
+    LOGICAL :: inventarioCargado = .FALSE.
     CONTAINS
 
     SUBROUTINE RedimensionarArrays(nombres, ubicaciones, cantidades, precios, newSize)
@@ -137,8 +138,30 @@ SUBROUTINE CargarInventario()
     INTEGER :: i, newSize
     INTEGER :: unidad_archivo
 
+    ! Verificar si el inventario ya ha sido cargado
+    IF (inventarioCargado) THEN
+        PRINT *, 'Ya has cargado un inventario, si quieres cargar otro, vuelve a iniciar el programa.'
+        RETURN
+    END IF
+
     numEquipos = 0
     newSize = 10
+
+    ! Desasignar arrays si ya están asignados
+    IF (ALLOCATED(nombres)) THEN
+        DEALLOCATE(nombres)
+    END IF
+    IF (ALLOCATED(ubicaciones)) THEN
+        DEALLOCATE(ubicaciones)
+    END IF
+    IF (ALLOCATED(cantidades)) THEN
+        DEALLOCATE(cantidades)
+    END IF
+    IF (ALLOCATED(precios)) THEN
+        DEALLOCATE(precios)
+    END IF
+
+    ! Asignar memoria a los arrays
     ALLOCATE(nombres(newSize), ubicaciones(newSize), cantidades(newSize), precios(newSize))
 
     unidad_archivo = 10
@@ -175,6 +198,9 @@ SUBROUTINE CargarInventario()
     ! Cierra el archivo
     CLOSE(unidad_archivo)
 
+    ! Marcar el inventario como cargado
+    inventarioCargado = .TRUE.
+
     PRINT *, 'Inventario cargado con exito.'
     PRINT *, 'Numero de equipos cargados: ', numEquipos
     PRINT *, '---------------------------------'
@@ -197,7 +223,7 @@ SUBROUTINE CargarMovimientos()
     unidad_archivo = 20
 
     ! Abre el archivo .mov
-    OPEN(unit=unidad_archivo, file='movimientos.mov', status='old', action='read', iostat=ios)
+    OPEN(unit=unidad_archivo, file='instrucciones.mov', status='old', action='read', iostat=ios)
     IF (ios /= 0) THEN
         PRINT *, 'Error al abrir el archivo movimientos.mov'
         RETURN
@@ -274,3 +300,4 @@ SUBROUTINE CrearInforme()
 
     PRINT *, 'Informe de inventario creado en archivo.txt'
 END SUBROUTINE CrearInforme
+
